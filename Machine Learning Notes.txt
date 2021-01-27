@@ -1,0 +1,87 @@
+ Machine Learning Course Notes   
+
+    - Avoid hyperfitting models
+    - The Curse of Dimensionality and the "hypersphere"
+
+We need THREE sets of data from our dataset:
+    1. training set
+    2. validation set
+    3. test set
+
+If you are really short of training data, so that if you have a separate validation set there is a worry that the algorithm won't be sufficiently trained; then it is possible to perform
+    "multi-fold cross-validation". The idea behind this is that the dataset is randomly partitioned into K subsets, and one subset is used as a validation set, while the algorithm is trained on all of the others. 
+    A different subset is then left out and a new model is trained on that subset, repeating the same process for all of the different subsets. Finally, the model that produced the **lowest validation error** is
+    tested and used.
+
+- In the most extreme case of this there is leave-one-out cross-validation, where the algorithm is validated on just one piece of data, training on all of the rest.
+
+2.2.3 The Confusion matrix
+
+- Regardless of how much data we use to test the trained algorithm, we still need to work out whether or not the result is good. This method is suitable for classification problems, known as the **confusion matrix.**
+- For regression problems, things are more complicated because results are continuous, and so the most common thing to use is the sum-of-squares error.
+
+-The confusion matrix is a nice simple idea: make a square matrix that contains all the
+possible classes in both the horizontal and vertical directions and list the classes along the
+top of a table as the predicted outputs, and then down the left-hand side as the targets.
+    So for example, the element of the matrix at (i,j) tells us how many input patterns were put into class i in the targets, but by the algorithm.
+    Anything on the leading diagonal (from top left of the matrix to the bottom right) is a correct answer. Suppose that we have Three classes C1, C2, C3.
+    Now, we count the number of times that the output was class C1 when the target was C1, then when the target was C2, and so on until we've filled in the output table below:   
+
+         C1 C2 C3
+          |  |  |
+    C1 = [5  1  0
+    C2 =  1  4  1     <---//Confusion Matrix
+    C3 =  2  0  4]
+
+    Reasoning: This matrix tells us that, for the three classes, most examples were classified correctly, but two examples of class C3 were misclassified as C1, and so on. 
+        For a small number of classes, this is a nice way to look at the outputs. If you just want one number, then it is possible to divide the sum of the elements on the leading diagonal by the sum of all the 
+        elements in the matrix, which gives the fraction of correct responses.
+    ----> The above is known as ACCURACY.
+
+
+Linear Regression 1/26/2021
+
+Row Vectors of a matrix are considered the Row Space C(A^T), also called the domain. 
+[---
+ ---
+ ---]
+
+Column vectors of a matrix form the column space C(A), also calle the range.
+[|||
+ |||
+ |||]
+
+- A solution of the system Ax = b exists if and only iff (iff) the vector b lies in the column-space C(A)
+- Iff there exist a unique solution the matrix A has an inverse A^-1
+    A system of "n" equations with "n" unknown can be solved with e.g., Gaussian elimination
+- If there is no such combination of columns, there is no exact solution
+
+Least Squares 
+- We can still find an approximate solution, however, such as "x-hat" 
+    - This means to find the point p = A*x-hat in C(A) that has the minimal residual "e"
+        ||e||^2 = ||Ax-b||^2 ; i.e. the smallest Euclidean distance to "b"
+    - This means, we are looking for an optimal x-hat that satisfies:
+        f = min||Ax-b||^2  (the objective function)
+            We then expand the objective function:
+            (Ax)^T*(Ax) - 2(Ax)^T*b + b^T*b
+                We then compute the gradient: 
+                    delta||e||^2 = 2A^T*Ax - 2A^T*b = 0
+
+Constrained Least-Squares 
+    Hard constraints (constraints that are satisfied exactly)
+        - [A * λB]x = [b * λd]
+            Use the scalar λ to weight the constraints. Too large or small, lambda (λ) might lead to numerical instability (a large condition number)
+    Soft constraints (constaints that are not satisfied exactly, only "as good as possible" w.r.t. some particular weight)
+
+Regularization  -->https://en.wikipedia.org/wiki/Matrix_regularization
+    - What to do if A does not have a full-column rank, i.e., the column-space is not linearly independent?
+    - Usually there will be no unique (approximate) solution but instead a *space* of solutions
+    - In certain cases Tchi-Regularization can be used:
+        = lim (A^T*A + λI)^-1 * A^T = A^+
+          λ->0                            
+
+The Perceptron Learning Rule Mathematics:
+    change_in_w_sub_j(delta Wj) = learning_rate(N(y^i - y_hat^i([_hat^i is the output]) * x_sub_j^i    <----- [Note to self: N = learning_rate]
+        1. y^i == the true class label of the ith training example
+        2. y_hat^i == the predicted class label           
+                
