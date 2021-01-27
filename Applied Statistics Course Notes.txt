@@ -1,0 +1,56 @@
+Applied Statistics Course Notes
+    -Visit www.goformative.com for practice questions
+    -Use Cisco AnyConnect to connect to NJIT VPN*
+    -
+
+Introduction- 1/25/2021
+    Graphs for Categorical/Qualitative Variables:
+        Consists of attributes, categories, labels or non-numeric entries. // e.g. pie chart, bar graph
+    Graphs for Quantitative Variables
+        Consists of numerical measurements or units // e.g. histogram, stemplot
+
+    -The distribution of a categorical variable essentially lists the categories and gives the "count" or percent of individuals who fall into each category.
+
+Constructing a Stem and Leaf
+    1. Divide each number (xi) into two parts: a stem, consisting of the leading digits, and a leaf, consisting of the remaining digit.
+    2. List the stem values in a vertical column. The stems are listed in order, starting with the smallest stem and ending with the largest.
+    3. Record the leaf for each observation beside its stem. (The leaf for each observation is placed at the appropriate stem row)
+    4. Write the leaf unit on the display.
+
+    Split Stems
+        -The purpose of the stem and leaf is to desacribe the data distribution graphically.
+        -If the data are too clustered, we can split and have multiple stems, thereby increasing the number of stems.
+
+Histogram
+    1. Variable of interest is placed on the horizontal axis
+    2. Frequency or relative frequency is placed on the vertical axis
+    3. Shown by drawing a rectangle
+    
+    Examining Distributions
+        Symmetric (Both sides are more or less the same when the graph is folded vertically down the middle)
+
+Outliers
+    An important kind of deviation is an outlier. 
+        
+Mean and Median
+    -Median is the measure of central tendency, difined as the number that divides a ranked data set into two halves; 2(n+1)/4
+    For an odd number of observations:
+        Median is the middle number, use 2(n+1)/4
+        Ex) For an odd number of observations (n=9):
+                2 3 4 5 6 7 8 9 10
+                    Median will be 2(9+1)/4 = the 5th observation (6)
+    
+Variance
+    -A measure of variability that uses all the data
+    -Measured in terms of square of the original units of measurement
+    -Mean of the squares of the deviations is called variance 
+    -Variance calculated for sample data is called sample variance and is denoted by s^2
+    - Obervation - mean = deviation (sum of squares for population variance)
+
+Sample Variance (Google/Watch Video**)
+
+Sum of the squares - square of the sum
+
+The values of the variance and the standard deviation are never negative.
+The larger the value of variance or standard deviation 
+If varainc

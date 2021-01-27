@@ -1,0 +1,67 @@
+Elements of Statistical Learning Book Notes
+
+- Note: Σ is sigma summation of elements.
+        x^T = x transpose T (a column vector turned into a row vector)
+        Symbols used:  β Σ ˆ ∈  (beta, sigma, hat, element)
+------------------------------------------------
+(1.1) Introduction:
+    -Although the term statistical learning is fairly new, many of the concepts that underlie the field were developed long ago. (Gauss and Legendre on the "method of least squares", now known as
+        linear regression, which is used for predicting quantitative values.
+    - By the end of the 1970s, many more techniques for learning from data were available, however they were computationally infeasable at the time. These methods were almost exclusively *linear methods*
+    - By the 1980's, computing technology had finally improved sufficiently that non-linear methods were no longer computationally prohibitive. 
+    -In the mid 1980's Breiman, Friedman, Olshen and Stone introduced classification and regresion trees, and were among the first to demonstrate the power of a detailed practical implementation of a method,
+        including cross-validation for model selection.
+    - Outputs are called *responses* or classically, the *dependent variables*.
+    - Inputs are often called the *predictors*
+
+- In the famous Iris discrimination example due to R. A. Fisher (Iris dataset), the output is qualitative (species of Iris) and assumes values in a finite set: G = {Virginica, Setosa and Versicolor}. In the
+    handwritten digit example, the output is one of 10 different digit classes: G = {0, 1,... , 9}
+        - In both of these, there is no explicit ordering in the classes, and in fact,  often **descriptive labels** rather than numbers are used to denote the classes.
+        - Qualitative variables are also referred to as **categorical variables** or **discrete variables**, as well as **factors**
+
+        Example 1.1) Given some specific atmospheric measurements today and yesterday, we want to predict the ozone level tomorrow. Given the grayscale values for the pixels of the digitized image of the handwritten
+        digit, we want to predict its class label. 
+        - This distinction in output type has led to a naming convention for the prediction tasks: regression when we predict quantitative outputs, and classification when we predict qualitative outputs. 
+        - A third variable type is **ordered categorical** such as small, medium and large, where there is an ordering between the values, but no metric notion is appropriate.
+        - Qualitative variables are typically represented numerically by **codes**. The easiest case is when there are only two classes or categories, such as "success" or "failure," "survived" or "died." These are 
+            often represented by a single binary digit or bit as 0 or 1, or else by -1 and 1. Such numeric codes are sometimes referred to as **targets**
+        -When there are more than two categories, several alternatives are available. The most useful and commonly used coding is via **dummy variables**. 
+
+-We will typically denote an input variable by the symbol X. If X is a vector, its components can be accessed by subscripts Xj . Quantitative outputs will be denoted by Y , and qualitative outputs by 
+    G (for group). We use uppercase letters such as X, Y or G when referring to the generic aspects of a variable. Observed values are written in lowercase; hence the ith observed value of X is written as xi
+    (where x_sub_i [xi] is again a scalar or vector). Matrices are represented by bold uppercase letters; or example, a set of N input p-vectors "xi , i = 1,... ,N" would be represented by the N × p matrix X. 
+    In general, vectors will not be bold, except when they have N components;  this convention distinguishes a p-vector of inputs xi for the this convention distinguishes a p-vector of inputs xi for the
+    ith observation from the N-vector xj consisting of all the observations on variable Xj . Since all vectors are assumed to be column vectors, the ith row of X is x^T*_sub_i[x^Ti] , the vector transpose of xi.
+
+-For the moment we can loosely state the learning task as follows: given the value of an input vector X, make a good prediction of the output Y,
+    denoted by Yˆ (pronounced “y-hat”). If Y takes values in IR then so should Yˆ(pronounced "y_hat"); likewise for categorical outputs, Gˆ(g_hat) should take values in the same set "G"(Group) associated with G(Set).
+
+-For a two-class G, one approach is to denote the binary coded target as Y , and then treat it as a quantitative output. The predictions Yˆ(y_hat) will typically lie in [0, 1], and we can assign to Gˆ the class label according to
+    whether yˆ > 0.5. This approach generalizes to K-level qualitative outputs as well. We need data to construct prediction rules, often a lot of it. We thus suppose we have available a set of measurements "(xi,yi) or (xi,gi),
+     where i = 1,... ,N," known as the training data, with which to construct our prediction rule.
+
+----------------------------------------------------
+
+(2.3.1) Linear Models and Least Squares:
+    -The linear model has been a mainstay of statistics for the past 30 years and remains one of our most important tools. Given a vector of inputs XT = (X1,X2,... ,Xp), we predict the output Y via the model
+     "Yˆ = β0 + Σ Xj*βˆj". The term βˆ 0 is the intercept, also known as the bias in machine learning. Often, it is convenient to include the constant variable 1 in X, include βˆ0 in the vector of coefficients βˆ, 
+     and then write the linear model in vector form as an inner product "Yˆ = X^T β"," Where X^T denotes vector or matrix transpose (X being a column vector). Here we are modeling a single output, so Yˆ is a **scalar**;
+--> - Viewed as a function over the p-dimensional input space, f(X) = X^T*β is linear, and the gradient f′(X) = β is a vector in input space that points in the steepest uphill direction.
+
+    - How do we fit the linear model to a set of training data? There aremany different methods, but by far the most popular is the method ofleast squares. In this approach, we pick the coefficients β to minimize the
+      **Residual Sum of Squares(RSS)** which is: RSS(β) = Σ(yi − x^T*i * β)^2 
+        - RSS(β) is a quadratic function of the parameters, and hence its minimum always exists, but may not be unique. The solution is easiest to characterize in matrix notation. We can write:
+            RSS(β) = (y − Xβ)^T (y − Xβ), where X is an N times p matrix with each ROW an input vector, and y is an N-vector of the outputs in the training set. Differentiating w.r.t. "β" we get the **normal equations**:
+            X^T(y-Xβ) = 0 | If X^T*X is nonsingular, then the unique solution is given by:
+            βˆ = (X^T*X)^-1 * X^T * y or in english, (([Beta_hat equals X_transpose times X])^inverse(-1), times X_transpose times y). The fitted value at the "ith" input xi is: yˆ_i = yˆ(xi) = x^T_sub_i * β) IN OTHER WORDS...
+            the fitted value at the ith input xi is:
+                prediction = prediction * (x_sub_i) == x_transpose * beta_hat [βˆi])  
+    - A mixture of Gaussians is best described in terms of the **generative model.** One first generates a discrete variable that determines which of the component Gaussians to use, and then generates an observation from 
+        the chosen density. In the case of one Gaussian per class, we will see in Chapter 4 that a linear decision boundary is the best one can do, and that our estimate is almost optimal. The region of overlap is inevitable, and
+        future data to be predicted will be plagued by this overlap as well. In the case of mixtures of tightly clustered Gaussian distributions, the story is different. A linear decision boundary is unlikely to be optimal, and 
+        in fact, is not. The totally OPTIMAL decision boundary is nonlinear and disjoint, and as such will be much more difficult to obtain. 
+
+(2.3.2 Nearest-Neighbor Methods:
+     - Nearest-neighbor methods use those observations in the training set T closest in input space to x to form Yˆ . Specifically, the k-nearest neighbor fit for Yˆ is defined as follows: Yˆ(x) = 1/k Σ(xi ∈ Nk(x)) * yi,
+    where Nk(x) is the neighborhood of x defined by the k closest points xi in the training sample. "CLoseness" implies a metric, which for the moment we assume is Euclidean distance. So, in other words, we find the k observations
+    with the xi closest to x in the input space, and **average** their responses
